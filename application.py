@@ -8,7 +8,7 @@ from fastapi import FastAPI, Request, BackgroundTasks
 app = FastAPI()
 
 # --- CONFIGURATION ---
-AUTH_URL = "https://email-api.preprod.cloud.unifonic.com/api/v1/oauth/token"
+AUTH_URL = "https://email-api.preprod.cloud.unifonic.com/api/v1/oauth2/token"
 WEBHOOK_URL = "https://email-api.preprod.cloud.unifonic.com/api/v1/public/webhook"
 CLIENT_ID = "39ac2c38-0251-475a-82e3-652a29068d18"
 CLIENT_SECRET = "g7RtW3Yd9HS9zzAzr+L8ZHY2e5TuD3PQY7kOTv39K6U="
@@ -74,5 +74,6 @@ async def webhook_handler(request: Request, background_tasks: BackgroundTasks):
 
     # Run the heavy lifting (Auth + 4 API calls) in the background
     background_tasks.add_task(dispatch_mock_events, body)
+
 
     return {"statusCode": 202, "message": "Events queued for dispatch"}

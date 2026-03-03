@@ -43,14 +43,14 @@ async def dispatch_mock_events(data: dict):
 
         # 3. Send events sequentially (or with delays if preferred)
         for event_type in event_types:
-            payload = {
+            payload = [{
                 **custom_args,
                 "email": to_email,
                 "event": event_type,
                 "sg_message_id": msg_id,
                 "sg_event_id": f"Event_{event_type}_{uuid.uuid4()}",
                 "timestamp": int(time.time()),
-            }
+            }]
             
             try:
                 # Optional: Add a small sleep so events don't arrive at the exact same millisecond
@@ -77,4 +77,5 @@ async def webhook_handler(request: Request, background_tasks: BackgroundTasks):
 
 
     return {"statusCode": 202, "message": "Events queued for dispatch"}
+
 
